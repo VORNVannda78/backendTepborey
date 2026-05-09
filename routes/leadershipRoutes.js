@@ -6,7 +6,7 @@ const Leadership = require('../models/Leadership');
 // GET /api/leadership — Public
 router.get('/', async (req, res) => {
   try {
-    const { level } = req.query; // ?level=chief
+    const { level } = req.query;
     const filter = level ? { level } : {};
     const leaders = await Leadership.find(filter).sort({ order: 1, createdAt: 1 });
     res.json(leaders);

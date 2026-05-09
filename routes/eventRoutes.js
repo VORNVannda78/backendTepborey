@@ -6,7 +6,7 @@ const Event   = require('../models/Event');
 // GET /api/events — Public
 router.get('/', async (req, res) => {
   try {
-    const { status } = req.query; // ?status=upcoming or ?status=past
+    const { status } = req.query;
     const filter = status ? { status } : {};
     const events = await Event.find(filter).sort({ date: -1 });
     res.json(events);

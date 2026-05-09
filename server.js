@@ -7,24 +7,30 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // សម្រាប់អានទិន្នន័យជា JSON
+app.use(express.json());
 
-// ... កូដដែលមានស្រាប់របស់ព្រះតេជគុណ ...
+// Import Routes
+const slideRoutes      = require('./routes/slideRoutes');
+const authRoutes       = require('./routes/authRoutes');
+const eventRoutes      = require('./routes/eventRoutes');
+const galleryRoutes    = require('./routes/galleryRoutes');
+const leadershipRoutes = require('./routes/leadershipRoutes');
+const settingsRoutes   = require('./routes/settingsRoutes');
 
-// ១. Import Routes
-const slideRoutes = require('./routes/slideRoutes');
+// Register Routes
+app.use('/api/slides',     slideRoutes);
+app.use('/api/auth',       authRoutes);
+app.use('/api/events',     eventRoutes);
+app.use('/api/gallery',    galleryRoutes);
+app.use('/api/leadership', leadershipRoutes);
+app.use('/api/settings',   settingsRoutes);
 
-// ២. ប្រើប្រាស់ Routes (ដាក់នៅខាងលើ app.listen)
-app.use('/api/slides', slideRoutes);
-
-// ... app.listen(PORT, ...) ...
-// ភ្ជាប់ទៅកាន់ MongoDB (ដាក់ក្នុង .env)
+// ភ្ជាប់ MongoDB
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to MongoDB!"))
-  .catch(err => console.error("Could not connect to MongoDB", err));
+  .then(() => console.log('✅ Connected to MongoDB!'))
+  .catch(err => console.error('❌ Could not connect to MongoDB:', err));
 
-// កំណត់ Port
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });

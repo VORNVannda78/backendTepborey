@@ -63,7 +63,6 @@ router.post('/forgot-password', async (req, res) => {
     if (!email) return res.status(400).json({ error: 'Email ត្រូវការ' });
 
     const admin = await Admin.findOne({ email: email.toLowerCase().trim() });
-    // Always return success (security: don't reveal if email exists)
     if (!admin) return res.json({ success: true, message: 'ប្រសិនបើ Email ត្រឹមត្រូវ OTP នឹងត្រូវផ្ញើ' });
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
